@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slider with Heart Animation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" rel="stylesheet">
+    <style>
+        /* Basic Reset and Background */
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            background-color: #f8f8f8;
+        }
+
+        /* Container for hearts */
+        .heart-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            /* Ensure hearts don't block interactions */
+            z-index: 0;
+        }
+
+        /* Heart shape styling */
+        .heart {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: #ff46a3;
+            transform: rotate(45deg);
+            animation: fall 5s linear infinite;
+            opacity: 0.9;
+        }
+
+        .heart:before,
+        .heart:after {
+            content: "";
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ff46a3;
+        }
+
+        .heart:before {
+            top: -25px;
+            left: 0;
+        }
+
+        .heart:after {
+            left: 25px;
+            top: 0;
+        }
+
+        /* Falling animation */
+        @keyframes fall {
+            0% {
+                transform: translateZ(-100vh) rotate(360deg);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(45deg);
+                opacity: 0.5;
+            }
+        }
+
+        /* Apply animated background with blend effect */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Create a pseudo-overlay for the background */
+        .background-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            z-index: -1;
+        }
+
+        /* Custom styles for the slider container */
+        .swiper-container {
+            width: 80%;
+            height: 350px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            width: 90%;
+            margin-top: 0px;
+            border-radius: 20px;
+        }
+
+        .wish {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            width: 90%;
+            transform: translateX(-50%);
+            color: #ff0077;
+            font-weight: bold;
+            font-size: 22px;
+            text-align: center;
+            text-shadow: 10px 10px 20px #00000080;
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .swiper-slide img:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transform: scale(1.06);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: #ff5ea8;
+            background-color: #ffffff00;
+        }
+
+        /* Media Query for larger screens (Laptop) */
+        @media screen and (min-width: 1024px) {
+            .swiper-container {
+            width: 95%;
+            height: 600px;
+            position: relative;
+            z-index: 1;
+        }
+
+            .swiper-slide img {
+                width: 50%;
+                height: 600px;
+            }
+
+            .wish {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Heart animation container -->
+    <div class="heart-container"></div>
+
+    <!-- Background overlay for better blending -->
+    <div class="background-overlay"></div>
+
+    <!-- Swiper Slider -->
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="img1.jpeg" alt="Image 1">
+                <div class="wish">
+                    <p>Wish You A Happiest Birthday Sweet Bro ❤️</p>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="img2.jpeg" alt="Image 2">
+                <div class="wish">
+                    <p>Wish You A Happiest Birthday Bhai May Allah bless you with lots of happiness ❤️</p>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="img3.jpeg" alt="Image 3">
+                <div class="wish">
+                    <p>Wish You A Happiest Birthday bhaijaan ❤️</p>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="img4.jpeg" alt="Image 4">
+                <div class="wish">
+                    <p>To my dear brother, I can't wait to see how you grow this year. Have a great day!
+                        ❤️</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Optional: Add Swiper Navigation buttons -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.swiper-container', {
+            loop: true,
+            autoplay: {
+                delay: 3000,
+            },
+            slidesPerView: 1,
+            spaceBetween: 10,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+
+        // Create hearts every 300 milliseconds
+        setInterval(() => {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = `${Math.random() * 100}vw`;
+            heart.style.animationDuration = `${Math.random() * 3 + 2}s`;
+            document.querySelector('.heart-container').appendChild(heart);
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }, 300);
+    </script>
+
+</body>
+
+</html>

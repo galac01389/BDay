@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Wishing Card</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Basic Reset and Background */
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            background-color: #f8f8f8;
+        }
+
+        /* Container for hearts */
+        .heart-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Heart shape styling */
+        .heart {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: hotpink;
+            transform: rotate(45deg);
+            animation: fall 5s linear infinite;
+            opacity: 0.9;
+        }
+
+        .heart:before,
+        .heart:after {
+            content: "";
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: hotpink;
+        }
+
+        .heart:before {
+            top: -25px;
+            left: 0;
+        }
+
+        .heart:after {
+            left: 25px;
+            top: 0;
+        }
+
+        /* Falling animation */
+        @keyframes fall {
+            0% {
+                transform: translateZ(-100vh) rotate(360deg);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(45deg);
+                opacity: 0.5;
+            }
+        }
+
+        /* Styling for the wishing card */
+        .card-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 40px;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 80%;
+            z-index: 10;
+        }
+
+        .card-container h1 {
+            color: hotpink;
+            font-size: 2.1rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .card-container p {
+            color: #333;
+            font-size: 1.25rem;
+        }
+
+        .button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: hotpink;
+            color: white;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #ff5ea8;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="heart-container"></div>
+
+    <div class="card-container">
+        <h1>Happy Birthday!</h1>
+        <p>Wishing you a day filled with love, joy, and amazing memories. May all your dreams come true!</p>
+        <br>
+        <button class="button" onclick="window.location.href='page2.html'">click to See More</button>
+    </div>
+    
+    <script>
+        const heartContainer = document.querySelector('.heart-container');
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+
+            // Randomize size and position
+            const size = Math.random() * 90 + 10; // Hearts between 10px and 30px
+
+            heart.style.left = `${Math.random() * 100}vw`;
+            heart.style.animationDuration = `${Math.random() * 3 + 2}s`; // Speed between 2s and 5s
+
+            heart.style.setProperty('--size', `${size}px`);
+
+            heartContainer.appendChild(heart);
+
+            // Remove the heart after animation completes
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        // Create hearts every 300 milliseconds
+        setInterval(createHeart, 300);
+    </script>
+</body>
+
+</html>
